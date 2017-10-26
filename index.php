@@ -1,6 +1,5 @@
 <?php
 require_once 'OCR.php';
-$loginUrl = "http://210.32.33.91:8080/reader/redr_verify.php"; // 登录页面
 $captchaUrl = "http://211.66.88.71/jwweb/sys/ValidateCode.aspx?t=".rand(100,999); // 验证码页面
 
 $ocr = new OCR($captchaUrl);
@@ -13,8 +12,8 @@ $array = [
     'FXNM' => ['F','X','N','M'],
     '9ZBE' => ['9','Z','B','E'],
     'XJS8' => ['X','J','S','8'],
-    'FYPC' => ['F','Y','P','C'],
-    'H3WJ' => ['H','3','W','J'],
+//    'FYPC' => ['F','Y','P','C'],
+//    'H3WJ' => ['H','3','W','J'],
 //    'GGYD' => ['G','G','Y','D'],
 //    'EYCD' => ['E','Y','C','D'],
     'BZ5V' => ['B','Z','5','V']

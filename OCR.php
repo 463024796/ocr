@@ -1,17 +1,18 @@
 <?php
 
 require_once "files.php";
+require_once "GetImage.php";
 class OCR
 {
-
     public $imagePath;
     private $DataArray;
     private $ImageSize;
     public $maxfontwith = 50;
     public $data;
-    public $Keys;
-    public $ImagePath;
+    private $Keys;
+    private $ImagePath;
     private $imageName;
+    private $getImage;
 
     public function __construct($imgpath)
     {
@@ -21,6 +22,8 @@ class OCR
         if($this->Keys == false)
             $this->Keys = array();
         unset($keysfiles);
+        $this->getImage = new GetImage();
+        $this->imageName = rand(999,9999);
     }
     public function setImagePath($img)
     {
@@ -30,8 +33,8 @@ class OCR
     public function getCaptcha()
     {
 
-//        $this->curlGetGif();
-        $this->imageName = "FYPC";
+        $this->getImage->curlGetGif($this->imageName, $this->imagePath);
+//        $this->imageName = "FYPC";
         $this->ImagePath = "./captcha/".$this->imageName.".jpg";
 
         $this->getHec();
@@ -54,31 +57,6 @@ class OCR
         $this->run();
     }
 
-    public function curlGetGif()
-    {
-        $headers = array();
-        $headers[] = 'Accept:image/webp,image/*,*/*;q=0.8';
-        $headers[] = 'Accept-Encoding:gzip, deflate, sdch';
-        $headers[] = 'Accept-Language:zh-CN,zh;q=0.8';
-        $headers[] = 'Cache-Control:no-cache';
-        $headers[] = 'Connection:keep-alive';
-        $headers[] = 'Host:211.66.88.71';
-        $headers[] = 'Pragma:no-cache';
-        $headers[] = 'Referer:http://211.66.88.71/jwweb/ZNPK/KBFB_ClassSel.aspx';
-        $headers[] = 'User-Agent:Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36';
-
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $this->imagePath);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_HEADER, 0);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-        $result = curl_exec($ch);
-        $this->imageName = rand(999,9999);
-        $downloaded_file = fopen("./captcha/".$this->imageName.".jpg", 'w');
-        fwrite($downloaded_file, $result);
-        fclose($downloaded_file);
-        return $result;
-    }
 
     public function getHec()
     {
